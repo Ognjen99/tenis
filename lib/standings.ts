@@ -13,6 +13,8 @@ export type StandingMatch = {
   player2Id: string;
   player1Sets: number;
   player2Sets: number;
+  player1Games: number;
+  player2Games: number;
 };
 
 export type StandingRow = {
@@ -26,6 +28,9 @@ export type StandingRow = {
   setsWon: number;
   setsLost: number;
   setDifference: number;
+  gamesWon: number;
+  gamesLost: number;
+  gameDifference: number;
   points: number;
 };
 
@@ -33,6 +38,7 @@ type HeadToHeadRow = {
   playerId: string;
   points: number;
   wins: number;
+  gamesWon: number;
 };
 
 export function calculateStandings(
@@ -53,6 +59,9 @@ export function calculateStandings(
       setsWon: 0,
       setsLost: 0,
       setDifference: 0,
+      gamesWon: 0,
+      gamesLost: 0,
+      gameDifference: 0,
       points: 0,
     });
   }
@@ -74,6 +83,10 @@ export function calculateStandings(
     player1.setsLost += match.player2Sets;
     player2.setsWon += match.player2Sets;
     player2.setsLost += match.player1Sets;
+    player1.gamesWon += match.player1Games;
+    player1.gamesLost += match.player2Games;
+    player2.gamesWon += match.player2Games;
+    player2.gamesLost += match.player1Games;
     player1.points += points.player1Points;
     player2.points += points.player2Points;
 
@@ -88,6 +101,7 @@ export function calculateStandings(
 
   for (const row of rows.values()) {
     row.setDifference = row.setsWon - row.setsLost;
+    row.gameDifference = row.gamesWon - row.gamesLost;
   }
 
   const sorted = sortWithTieBreakers([...rows.values()], matches);
@@ -96,6 +110,7 @@ export function calculateStandings(
     ...row,
     position: index + 1,
     setDifference: row.setsWon - row.setsLost,
+    gameDifference: row.gamesWon - row.gamesLost,
   }));
 }
 
@@ -104,6 +119,7 @@ function sortWithTieBreakers(rows: StandingRow[], matches: StandingMatch[]) {
     (a, b) =>
       b.points - a.points ||
       b.setsWon - a.setsWon ||
+      b.gamesWon - a.gamesWon ||
       a.setsLost - b.setsLost ||
       a.playerName.localeCompare(b.playerName),
   );
@@ -118,7 +134,8 @@ function sortWithTieBreakers(rows: StandingRow[], matches: StandingMatch[]) {
     while (
       cursor < primarySorted.length &&
       primarySorted[cursor].points === group[0].points &&
-      primarySorted[cursor].setsWon === group[0].setsWon
+      primarySorted[cursor].setsWon === group[0].setsWon &&
+      primarySorted[cursor].gamesWon === group[0].gamesWon
     ) {
       group.push(primarySorted[cursor]);
       cursor += 1;
@@ -143,9 +160,10 @@ function rankTieGroup(rows: StandingRow[], matches: StandingMatch[]) {
 
     return (
       (h2hB?.points ?? 0) - (h2hA?.points ?? 0) ||
+      (h2hB?.gamesWon ?? 0) - (h2hA?.gamesWon ?? 0) ||
       (h2hB?.wins ?? 0) - (h2hA?.wins ?? 0) ||
       a.setsLost - b.setsLost ||
-      b.setDifference - a.setDifference ||
+      b.gameDifference - a.gameDifference ||
       a.playerName.localeCompare(b.playerName)
     );
   });
@@ -160,6 +178,7 @@ function calculateHeadToHead(rows: StandingRow[], matches: StandingMatch[]) {
       playerId: row.playerId,
       points: 0,
       wins: 0,
+      gamesWon: 0,
     });
   }
 
@@ -179,6 +198,8 @@ function calculateHeadToHead(rows: StandingRow[], matches: StandingMatch[]) {
 
     player1.points += points.player1Points;
     player2.points += points.player2Points;
+    player1.gamesWon += match.player1Games;
+    player2.gamesWon += match.player2Games;
 
     if (winnerId === match.player1Id) {
       player1.wins += 1;

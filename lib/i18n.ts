@@ -16,7 +16,7 @@ export const sr = {
     eyebrow: "Liga - pregled",
     title: "Trenutna rang lista",
     description:
-      "Rang lista se automatski računa na osnovu unetih rezultata prema bodovima, dobijenim setovima, međusobnim susretima i izgubljenim setovima.",
+      "Rang lista se automatski računa na osnovu unetih rezultata prema bodovima, dobijenim setovima, gemovima, međusobnim susretima i izgubljenim setovima.",
     recentMatches: "Skorašnji mečevi",
     viewAll: "Vidi sve",
     noResults: "Još nema rezultata.",
@@ -32,6 +32,9 @@ export const sr = {
     setsWon: "SG",
     setsLost: "SI",
     diff: "Raz",
+    gamesWon: "GG",
+    gamesLost: "GI",
+    gamesDiff: "GR",
     points: "Bod",
   },
   stats: {
@@ -102,10 +105,13 @@ export const sr = {
       "Izaberite bilo koja dva igrača i unesite rezultat iz perspektive igrača 1. Rang lista se automatski ažurira.",
     choosePlayer1: "Izaberi igrača 1",
     choosePlayer2: "Izaberi igrača 2",
-    resultForPlayer1: "Rezultat za igrača 1",
+    resultForPlayer1: "Tačan rezultat",
+    exactScorePlaceholder: "6:4, 3:6, 6:2",
+    player1Games: "Gemovi igrača 1",
+    player2Games: "Gemovi igrača 2",
     chooseResult: "Izaberi rezultat",
     resultHint:
-      "Primer: ako je igrač 1 pobedio 2:1, izaberite 2:1.",
+      "Unesite rezultat po setovima, npr. 6:4, 3:6, 6:2. Ako unesete samo setove (2:1), popunite i ukupan broj gemova.",
     saveResult: "Sačuvaj rezultat",
     needTwoPlayers:
       "Dodajte najmanje dva igrača pre unosa rezultata meča.",
@@ -151,8 +157,13 @@ export const sr = {
     chooseImage: "Izaberite sliku za otpremanje.",
     imageTooLarge: "Slika mora biti 2 MB ili manja.",
     invalidImageType: "Koristite JPG, PNG, WEBP ili GIF format.",
-    invalidScoreFormat: "Rezultat mora biti unet kao 2:0 ili 2:1.",
-    invalidScoreValues: "Dozvoljeni rezultati su 2:0, 2:1, 0:2 ili 1:2.",
+    invalidScoreFormat: "Rezultat mora biti unet kao 6:4, 3:6, 6:2 ili 2:1.",
+    invalidScoreValues: "Dozvoljeni rezultati u setovima su 2:0, 2:1, 0:2 ili 1:2.",
+    invalidDetailedScore: "Unesite 2 ili 3 seta, npr. 6:4, 3:6, 6:2.",
+    invalidSetScore: "Svaki set mora imati pobednika, npr. 6:4.",
+    invalidGamesCount: "Unesite ispravan broj gemova za oba igrača.",
+    gamesMustDiffer: "Igrači ne mogu imati isti broj gemova.",
+    winnerMustHaveMoreGames: "Pobednik mora imati više gemova od gubitnika.",
   },
 } as const;
 

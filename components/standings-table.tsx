@@ -18,7 +18,7 @@ export function StandingsTable({ standings }: StandingsTableProps) {
   return (
     <div className="overflow-hidden rounded-3xl border border-white/10 bg-slate-900/80 shadow-2xl shadow-slate-950/30">
       <div className="overflow-x-auto">
-        <table className="w-full min-w-[760px] text-left text-sm">
+        <table className="w-full min-w-[980px] text-left text-sm">
           <thead className="bg-white/5 text-xs uppercase tracking-wide text-slate-400">
             <tr>
               <th className="px-4 py-4">{sr.standings.pos}</th>
@@ -29,6 +29,9 @@ export function StandingsTable({ standings }: StandingsTableProps) {
               <th className="px-4 py-4 text-right">{sr.standings.setsWon}</th>
               <th className="px-4 py-4 text-right">{sr.standings.setsLost}</th>
               <th className="px-4 py-4 text-right">{sr.standings.diff}</th>
+              <th className="px-4 py-4 text-right">{sr.standings.gamesWon}</th>
+              <th className="px-4 py-4 text-right">{sr.standings.gamesLost}</th>
+              <th className="px-4 py-4 text-right">{sr.standings.gamesDiff}</th>
               <th className="px-4 py-4 text-right">{sr.standings.points}</th>
             </tr>
           </thead>
@@ -66,6 +69,16 @@ export function StandingsTable({ standings }: StandingsTableProps) {
                 <td className="px-4 py-4 text-right text-slate-300">
                   {row.setDifference > 0 ? "+" : ""}
                   {row.setDifference}
+                </td>
+                <td className="px-4 py-4 text-right text-slate-300">
+                  {row.gamesWon}
+                </td>
+                <td className="px-4 py-4 text-right text-slate-300">
+                  {row.gamesLost}
+                </td>
+                <td className="px-4 py-4 text-right text-slate-300">
+                  {row.gameDifference > 0 ? "+" : ""}
+                  {row.gameDifference}
                 </td>
                 <td className="px-4 py-4 text-right text-lg font-bold text-white">
                   {row.points}

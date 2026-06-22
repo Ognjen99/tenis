@@ -1,6 +1,5 @@
 import { z } from "zod";
 import { sr } from "@/lib/i18n";
-import { VALID_SCORES } from "@/lib/scoring";
 
 export const playerNameSchema = z
   .string()
@@ -8,9 +7,27 @@ export const playerNameSchema = z
   .min(2, sr.messages.nameMinLength)
   .max(80, sr.messages.nameMaxLength);
 
-export const scoreSchema = z.enum(VALID_SCORES);
+export const exactScoreSchema = z
+  .string()
+  .trim()
+  .min(1, sr.messages.invalidScoreFormat);
+
+export const gamesCountSchema = z.coerce
+  .number()
+  .int()
+  .min(0, sr.messages.invalidGamesCount);
 
 export function getString(formData: FormData, key: string) {
   const value = formData.get(key);
   return typeof value === "string" ? value : "";
+}
+
+export function getOptionalNumber(formData: FormData, key: string) {
+  const value = getString(formData, key).trim();
+  if (!value) {
+    return undefined;
+  }
+
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : undefined;
 }

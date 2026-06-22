@@ -4,9 +4,13 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/db";
 import { sr } from "@/lib/i18n";
-import { parseScore } from "@/lib/scoring";
+import { parseMatchResult } from "@/lib/scoring";
 import { requireAdmin } from "@/lib/session";
-import { getString, scoreSchema } from "@/lib/validation";
+import {
+  exactScoreSchema,
+  getOptionalNumber,
+  getString,
+} from "@/lib/validation";
 
 export async function addMatchResultAction(formData: FormData) {
   await requireAdmin();
@@ -55,6 +59,9 @@ export async function addMatchResultAction(formData: FormData) {
       player2Id,
       player1Sets: score.player1Sets,
       player2Sets: score.player2Sets,
+      player1Games: score.player1Games,
+      player2Games: score.player2Games,
+      scoreDetail: score.scoreDetail,
     },
   });
 
@@ -79,6 +86,9 @@ export async function updateMatchResultAction(formData: FormData) {
     data: {
       player1Sets: score.player1Sets,
       player2Sets: score.player2Sets,
+      player1Games: score.player1Games,
+      player2Games: score.player2Games,
+      scoreDetail: score.scoreDetail,
     },
   });
 
@@ -103,13 +113,23 @@ export async function deleteMatchResultAction(formData: FormData) {
 }
 
 function parseSubmittedScore(formData: FormData, errorPath: string) {
-  const parsed = scoreSchema.safeParse(getString(formData, "score"));
+  const parsed = exactScoreSchema.safeParse(getString(formData, "exactScore"));
 
   if (!parsed.success) {
     redirectWithError(errorPath, sr.messages.invalidResult);
   }
 
-  return parseScore(parsed.data);
+  try {
+    return parseMatchResult(
+      parsed.data,
+      getOptionalNumber(formData, "player1Games"),
+      getOptionalNumber(formData, "player2Games"),
+    );
+  } catch (error) {
+    const message =
+      error instanceof Error ? error.message : sr.messages.invalidResult;
+    redirectWithError(errorPath, message);
+  }
 }
 
 function revalidateLeaguePages() {

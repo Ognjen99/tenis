@@ -8,7 +8,7 @@ import { Notice } from "@/components/notice";
 import { PageShell } from "@/components/page-shell";
 import { prisma } from "@/lib/db";
 import { sr } from "@/lib/i18n";
-import { formatScore, VALID_SCORES } from "@/lib/scoring";
+import { formatMatchResult } from "@/lib/scoring";
 import { requireAdmin } from "@/lib/session";
 
 type EditMatchPageProps = {
@@ -59,7 +59,7 @@ export default async function EditMatchPage({
             {match.player1.name} {sr.matches.vs} {match.player2.name}
           </h2>
           <p className="mt-1 text-slate-300">
-            {sr.admin.currentResult}: {formatScore(match)}
+            {sr.admin.currentResult}: {formatMatchResult(match)}
           </p>
         </section>
 
@@ -72,19 +72,44 @@ export default async function EditMatchPage({
             <span className="text-sm font-medium text-slate-200">
               {sr.admin.newResult}
             </span>
-            <select
-              name="score"
+            <input
+              name="exactScore"
+              type="text"
               required
+              defaultValue={match.scoreDetail ?? ""}
+              placeholder={sr.admin.exactScorePlaceholder}
               className="mt-2 w-full rounded-2xl border border-white/10 bg-slate-950 px-4 py-3 text-white outline-none ring-emerald-400/40 focus:ring-4"
-              defaultValue={formatScore(match)}
-            >
-              {VALID_SCORES.map((score) => (
-                <option key={score} value={score}>
-                  {score}
-                </option>
-              ))}
-            </select>
+            />
+            <p className="mt-2 text-sm text-slate-400">{sr.admin.resultHint}</p>
           </label>
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            <label className="block">
+              <span className="text-sm font-medium text-slate-200">
+                {sr.admin.player1Games}
+              </span>
+              <input
+                name="player1Games"
+                type="number"
+                min={0}
+                defaultValue={match.player1Games || ""}
+                className="mt-2 w-full rounded-2xl border border-white/10 bg-slate-950 px-4 py-3 text-white outline-none ring-emerald-400/40 focus:ring-4"
+              />
+            </label>
+
+            <label className="block">
+              <span className="text-sm font-medium text-slate-200">
+                {sr.admin.player2Games}
+              </span>
+              <input
+                name="player2Games"
+                type="number"
+                min={0}
+                defaultValue={match.player2Games || ""}
+                className="mt-2 w-full rounded-2xl border border-white/10 bg-slate-950 px-4 py-3 text-white outline-none ring-emerald-400/40 focus:ring-4"
+              />
+            </label>
+          </div>
           <button className="rounded-2xl bg-emerald-400 px-5 py-3 font-bold text-slate-950 hover:bg-emerald-300">
             {sr.admin.saveChange}
           </button>

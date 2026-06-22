@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/db";
 import { calculateStandings } from "@/lib/standings";
-import { formatScore, getWinnerId } from "@/lib/scoring";
+import { formatMatchResult, getWinnerId } from "@/lib/scoring";
 
 export async function getStandings() {
   const [players, matches] = await Promise.all([
@@ -55,7 +55,7 @@ export async function getMatchHistory() {
 
   return matches.map((match) => ({
     ...match,
-    result: formatScore(match),
+    result: formatMatchResult(match),
     winner:
       getWinnerId(match) === match.player1Id ? match.player1 : match.player2,
   }));
