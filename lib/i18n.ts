@@ -1,7 +1,6 @@
 export const sr = {
   app: {
-    title: "Teniska liga",
-    subtitle: "Berijansko takmičenje",
+    title: "Тениска лига Зворник 2026",
     description:
       "Upravljanje igračima, rezultatima, rang listom i istorijom mečeva.",
   },
@@ -29,10 +28,10 @@ export const sr = {
     mp: "OM",
     wins: "P",
     losses: "I",
-    setsWon: "SG",
+    setsWon: "SD",
     setsLost: "SI",
     diff: "Raz",
-    gamesWon: "GG",
+    gamesWon: "GD",
     gamesLost: "GI",
     gamesDiff: "GR",
     points: "Bod",

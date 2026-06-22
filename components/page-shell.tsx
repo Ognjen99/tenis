@@ -23,7 +23,6 @@ export async function PageShell({ children }: PageShellProps) {
               <span className="block text-xl font-bold tracking-tight">
                 {sr.app.title}
               </span>
-              <span className="text-sm text-slate-400">{sr.app.subtitle}</span>
             </span>
           </Link>
 
