@@ -66,8 +66,8 @@ export function StandingsTable({ standings }: StandingsTableProps) {
         ))}
       </div>
 
-      <div className="hidden overflow-hidden rounded-3xl border border-white/10 bg-slate-900/80 shadow-2xl shadow-slate-950/30 md:block">
-        <div className="overflow-x-auto">
+      <div className="hidden min-w-0 overflow-hidden rounded-3xl border border-white/10 bg-slate-900/80 shadow-2xl shadow-slate-950/30 md:block">
+        <div className="max-w-full overflow-x-auto">
           <table className="w-full min-w-[980px] text-left text-sm">
             <thead className="bg-white/5 text-xs uppercase tracking-wide text-slate-400">
               <tr>

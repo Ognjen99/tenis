@@ -28,18 +28,18 @@ export function LeagueStatsCards({ stats }: LeagueStatsCardsProps) {
   ];
 
   return (
-    <div className="grid gap-4 grid-cols-2 sm:grid-cols-2 lg:grid-cols-3">
+    <div className="grid grid-cols-2 gap-3 sm:gap-4">
       {cards.map((card) => (
         <div
           key={card.label}
-          className="min-w-0 overflow-hidden rounded-3xl border border-white/10 bg-white/[0.06] p-5 shadow-xl shadow-slate-950/20"
+          className="min-w-0 overflow-hidden rounded-3xl border border-white/10 bg-white/[0.06] p-4 shadow-xl shadow-slate-950/20 sm:p-5"
         >
           <p className="text-sm text-slate-400">{card.label}</p>
           <p className="mt-2 text-2xl font-bold text-white">{card.value}</p>
         </div>
       ))}
 
-      <div className="min-w-0 overflow-hidden rounded-3xl border border-white/10 bg-white/[0.06] p-5 shadow-xl shadow-slate-950/20">
+      <div className="col-span-2 min-w-0 overflow-hidden rounded-3xl border border-white/10 bg-white/[0.06] p-4 shadow-xl shadow-slate-950/20 sm:p-5">
         <p className="text-sm text-slate-400">{sr.stats.leader}</p>
         {stats.leader ? (
           <div className="mt-2 min-w-0">

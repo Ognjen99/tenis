@@ -15,8 +15,8 @@ export default async function Home() {
 
   return (
     <PageShell>
-      <section className="grid gap-8 lg:grid-cols-[1.4fr_0.8fr] lg:items-start">
-        <div className="space-y-6">
+      <section className="grid w-full gap-8 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,0.8fr)] lg:items-start">
+        <div className="min-w-0 space-y-6">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.25em] text-emerald-300 sm:text-sm sm:tracking-[0.3em]">
               {sr.home.eyebrow}
@@ -31,7 +31,7 @@ export default async function Home() {
           <StandingsTable standings={standings} />
         </div>
 
-        <aside className="space-y-6">
+        <aside className="min-w-0 space-y-6">
           <LeagueStatsCards stats={stats} />
           <section className="rounded-3xl border border-white/10 bg-white/[0.06] p-4 sm:p-5">
             <div className="flex items-center justify-between gap-4">

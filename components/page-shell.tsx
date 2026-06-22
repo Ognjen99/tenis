@@ -14,7 +14,7 @@ export async function PageShell({ children }: PageShellProps) {
   const isAdmin = await isAdminLoggedIn();
 
   return (
-    <div className="min-h-screen overflow-x-clip bg-[radial-gradient(circle_at_top_left,#1e3a8a,transparent_35%),#020617]">
+    <div className="min-h-screen bg-[radial-gradient(circle_at_top_left,#1e3a8a,transparent_35%),#020617]">
       <header className="border-b border-white/10">
         <Image
           src={headerBanner}
