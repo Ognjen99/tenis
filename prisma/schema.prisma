@@ -1,0 +1,62 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Player {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  imageUrl  String?
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  fixturesAsPlayer1 Fixture[] @relation("FixturePlayer1")
+  fixturesAsPlayer2 Fixture[] @relation("FixturePlayer2")
+  matchesAsPlayer1  Match[]   @relation("MatchPlayer1")
+  matchesAsPlayer2  Match[]   @relation("MatchPlayer2")
+}
+
+model Fixture {
+  id        String   @id @default(cuid())
+  player1Id String
+  player2Id String
+  leg       Int
+  createdAt DateTime @default(now())
+
+  player1 Player @relation("FixturePlayer1", fields: [player1Id], references: [id], onDelete: Cascade)
+  player2 Player @relation("FixturePlayer2", fields: [player2Id], references: [id], onDelete: Cascade)
+  match   Match?
+
+  @@unique([player1Id, player2Id, leg])
+  @@index([player1Id])
+  @@index([player2Id])
+}
+
+model Match {
+  id          String   @id @default(cuid())
+  fixtureId   String   @unique
+  player1Id   String
+  player2Id   String
+  player1Sets Int
+  player2Sets Int
+  enteredAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  fixture Fixture @relation(fields: [fixtureId], references: [id], onDelete: Cascade)
+  player1 Player  @relation("MatchPlayer1", fields: [player1Id], references: [id], onDelete: Cascade)
+  player2 Player  @relation("MatchPlayer2", fields: [player2Id], references: [id], onDelete: Cascade)
+
+  @@index([player1Id])
+  @@index([player2Id])
+  @@index([enteredAt])
+}

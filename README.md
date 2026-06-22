@@ -1,3 +1,87 @@
+# Tennis League
+
+A modern Next.js app for managing a double round-robin tennis league.
+
+## Features
+
+- Admin-managed players, with no hardcoded names
+- Automatic double round-robin fixture generation
+- Admin-only result entry, editing, and deletion
+- Dynamic standings calculated from match results
+- Points system:
+  - 2:0 winner gets 3 points, loser gets 0.5
+  - 2:1 winner gets 3 points, loser gets 1
+- Tie-breakers:
+  - Total points
+  - Sets won
+  - Head-to-head among tied players
+  - Fewer sets lost
+- Public dashboard with standings, recent matches, and league stats
+- Public match history
+- Responsive admin panel for phone, tablet, and desktop
+
+## Tech Stack
+
+- Next.js App Router
+- Prisma ORM
+- SQLite for local development
+- PostgreSQL-ready for production
+- iron-session for password-based admin login
+- Tailwind CSS
+- Vitest
+
+## Local Setup
+
+```bash
+npm install
+npm run prisma:migrate
+npm run dev
+```
+
+Open `http://localhost:3000`.
+
+Admin login is at `http://localhost:3000/admin/login`.
+
+The local `.env` created during development uses:
+
+```bash
+ADMIN_PASSWORD="admin123"
+```
+
+Change `ADMIN_PASSWORD` and `SESSION_SECRET` before deploying.
+
+## Database
+
+Local development uses SQLite:
+
+```bash
+DATABASE_URL="file:./dev.db"
+```
+
+For Vercel, use a hosted PostgreSQL database such as Neon or Railway and set:
+
+```bash
+DATABASE_URL="postgresql://..."
+ADMIN_PASSWORD="your-strong-admin-password"
+SESSION_SECRET="at-least-32-random-characters"
+```
+
+Run production migrations with:
+
+```bash
+npm run prisma:deploy
+```
+
+## Useful Commands
+
+```bash
+npm run dev
+npm run lint
+npm test
+npm run build
+npm run prisma:migrate
+npm run prisma:deploy
+```
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
