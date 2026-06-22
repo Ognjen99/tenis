@@ -39,13 +39,13 @@ export default async function EditMatchPage({
     <PageShell>
       <div className="space-y-6">
         <div>
-          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-emerald-300">
+          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-emerald-300 sm:text-sm sm:tracking-[0.3em]">
             {sr.admin.eyebrow}
           </p>
-          <h1 className="mt-3 text-4xl font-bold tracking-tight text-white">
+          <h1 className="mt-3 text-2xl font-bold tracking-tight text-white sm:text-3xl lg:text-4xl">
             {sr.admin.editMatchTitle}
           </h1>
-          <p className="mt-3 max-w-2xl text-slate-300">
+          <p className="mt-3 max-w-2xl text-sm text-slate-300 sm:text-base">
             {sr.admin.editMatchDescription}
           </p>
         </div>
@@ -53,19 +53,19 @@ export default async function EditMatchPage({
         <AdminNav />
         <Notice error={pageParams.error} success={pageParams.success} />
 
-        <section className="rounded-3xl border border-white/10 bg-white/[0.06] p-6">
+        <section className="rounded-3xl border border-white/10 bg-white/[0.06] p-4 sm:p-6">
           <p className="text-sm text-slate-400">{sr.admin.fixture}</p>
-          <h2 className="mt-2 text-2xl font-bold text-white">
+          <h2 className="mt-2 break-words text-xl font-bold text-white sm:text-2xl">
             {match.player1.name} {sr.matches.vs} {match.player2.name}
           </h2>
-          <p className="mt-1 text-slate-300">
+          <p className="mt-1 break-words text-sm text-slate-300 sm:text-base">
             {sr.admin.currentResult}: {formatMatchResult(match)}
           </p>
         </section>
 
         <form
           action={updateMatchResultAction}
-          className="space-y-5 rounded-3xl border border-white/10 bg-white/[0.06] p-6"
+          className="space-y-5 rounded-3xl border border-white/10 bg-white/[0.06] p-4 sm:p-6"
         >
           <input type="hidden" name="matchId" value={match.id} />
           <label className="block">
@@ -117,7 +117,7 @@ export default async function EditMatchPage({
 
         <form
           action={deleteMatchResultAction}
-          className="rounded-3xl border border-red-400/30 bg-red-950/30 p-6"
+          className="rounded-3xl border border-red-400/30 bg-red-950/30 p-4 sm:p-6"
         >
           <input type="hidden" name="matchId" value={match.id} />
           <h2 className="text-xl font-bold text-red-100">

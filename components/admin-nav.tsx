@@ -10,11 +10,11 @@ const links = [
 
 export function AdminNav() {
   return (
-    <nav className="flex flex-wrap gap-2 rounded-3xl border border-white/10 bg-white/[0.06] p-2">
+    <nav className="grid grid-cols-2 gap-2 rounded-3xl border border-white/10 bg-white/[0.06] p-2 sm:flex sm:flex-wrap">
       {links.map((link) => (
         <Link
           key={link.href}
-          className="rounded-2xl px-4 py-2 text-sm font-semibold text-slate-200 hover:bg-white/10 hover:text-white"
+          className="rounded-2xl px-3 py-2 text-center text-sm font-semibold text-slate-200 hover:bg-white/10 hover:text-white sm:px-4 sm:text-left"
           href={link.href}
         >
           {link.label}

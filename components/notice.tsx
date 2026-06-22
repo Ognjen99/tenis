@@ -14,7 +14,7 @@ export function Notice({ error, success }: NoticeProps) {
   return (
     <div className="space-y-2">
       {errorMessage ? (
-        <p className="rounded-2xl border border-red-400/30 bg-red-950/50 px-4 py-3 text-sm text-red-100">
+        <p className="break-words rounded-2xl border border-red-400/30 bg-red-950/50 px-4 py-3 text-sm text-red-100">
           {decodeURIComponent(errorMessage)}
         </p>
       ) : null}

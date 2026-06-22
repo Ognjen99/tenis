@@ -22,13 +22,15 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
     <PageShell>
       <div className="mx-auto max-w-md space-y-6">
         <div>
-          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-emerald-300">
+          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-emerald-300 sm:text-sm sm:tracking-[0.3em]">
             {sr.admin.eyebrow}
           </p>
-          <h1 className="mt-3 text-4xl font-bold tracking-tight text-white">
+          <h1 className="mt-3 text-2xl font-bold tracking-tight text-white sm:text-3xl lg:text-4xl">
             {sr.admin.loginTitle}
           </h1>
-          <p className="mt-3 text-slate-300">{sr.admin.loginDescription}</p>
+          <p className="mt-3 text-sm text-slate-300 sm:text-base">
+            {sr.admin.loginDescription}
+          </p>
         </div>
 
         <Notice

@@ -18,20 +18,22 @@ export default async function Home() {
       <section className="grid gap-8 lg:grid-cols-[1.4fr_0.8fr] lg:items-start">
         <div className="space-y-6">
           <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-emerald-300">
+            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-emerald-300 sm:text-sm sm:tracking-[0.3em]">
               {sr.home.eyebrow}
             </p>
-            <h1 className="mt-3 text-4xl font-bold tracking-tight text-white sm:text-5xl">
+            <h1 className="mt-3 text-2xl font-bold tracking-tight text-white sm:text-3xl lg:text-4xl">
               {sr.home.title}
             </h1>
-            <p className="mt-4 max-w-2xl text-slate-300">{sr.home.description}</p>
+            <p className="mt-4 max-w-2xl text-sm text-slate-300 sm:text-base">
+              {sr.home.description}
+            </p>
           </div>
           <StandingsTable standings={standings} />
         </div>
 
         <aside className="space-y-6">
           <LeagueStatsCards stats={stats} />
-          <section className="rounded-3xl border border-white/10 bg-white/[0.06] p-5">
+          <section className="rounded-3xl border border-white/10 bg-white/[0.06] p-4 sm:p-5">
             <div className="flex items-center justify-between gap-4">
               <h2 className="text-xl font-bold text-white">
                 {sr.home.recentMatches}
