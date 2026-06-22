@@ -3,12 +3,31 @@
 import "dotenv/config";
 import { defineConfig } from "prisma/config";
 
+function getMigrationDatabaseUrl() {
+  const directUrl = process.env["DIRECT_URL"]?.trim();
+  if (directUrl) {
+    return directUrl;
+  }
+
+  const databaseUrl = process.env["DATABASE_URL"]?.trim();
+  if (!databaseUrl) {
+    return undefined;
+  }
+
+  // Neon pooler URLs cannot run Prisma migrations (advisory lock P1002).
+  if (databaseUrl.includes("-pooler.")) {
+    return databaseUrl.replace("-pooler.", ".");
+  }
+
+  return databaseUrl;
+}
+
 export default defineConfig({
   schema: "prisma/schema.prisma",
   migrations: {
     path: "prisma/migrations",
   },
   datasource: {
-    url: process.env["DATABASE_URL"],
+    url: getMigrationDatabaseUrl(),
   },
 });
