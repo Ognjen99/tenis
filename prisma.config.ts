@@ -6,7 +6,7 @@ import { defineConfig } from "prisma/config";
 function getMigrationDatabaseUrl() {
   const directUrl = process.env["DIRECT_URL"]?.trim();
   if (directUrl) {
-    return directUrl;
+    return withConnectTimeout(directUrl);
   }
 
   const databaseUrl = process.env["DATABASE_URL"]?.trim();
@@ -14,12 +14,19 @@ function getMigrationDatabaseUrl() {
     return undefined;
   }
 
-  // Neon pooler URLs cannot run Prisma migrations (advisory lock P1002).
-  if (databaseUrl.includes("-pooler.")) {
-    return databaseUrl.replace("-pooler.", ".");
-  }
+  const migrationUrl = databaseUrl.includes("-pooler.")
+    ? databaseUrl.replace("-pooler.", ".")
+    : databaseUrl;
 
-  return databaseUrl;
+  return withConnectTimeout(migrationUrl);
+}
+
+function withConnectTimeout(connectionString: string) {
+  const url = new URL(connectionString);
+  if (!url.searchParams.has("connect_timeout")) {
+    url.searchParams.set("connect_timeout", "30");
+  }
+  return url.toString();
 }
 
 export default defineConfig({
