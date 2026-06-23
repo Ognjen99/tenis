@@ -41,6 +41,7 @@ Admin prijava: `http://localhost:3000/admin/login`
 | `DATABASE_URL` | `postgresql://...?sslmode=require` |
 | `ADMIN_PASSWORD` | jaka admin lozinka |
 | `SESSION_SECRET` | najmanje 32 random karaktera |
+| `BLOB_READ_WRITE_TOKEN` | automatski se dodaje kada povežete Vercel Blob store |
 
 3. Build command (već podešen u `package.json`):
 
@@ -52,9 +53,15 @@ prisma migrate deploy && next build
 
 Migracije se automatski primenjuju tokom build-a.
 
-## Napomena o fotografijama
+## Fotografije igrača (Vercel Blob)
 
-Na Vercelu, otpremljene slike se čuvaju na privremenom filesystem-u i mogu nestati posle redeploy-a. Za produkciju razmotrite Vercel Blob ili Cloudinary.
+Na Vercelu filesystem je read-only, pa se slike ne mogu čuvati u `public/uploads`.
+
+1. U Vercel dashboard-u otvorite projekat.
+2. Idite na **Storage** → **Create Database** → **Blob**.
+3. Povežite Blob store sa projektom — Vercel automatski dodaje `BLOB_READ_WRITE_TOKEN`.
+
+Lokalno, slike se i dalje čuvaju u `public/uploads/players/` ako nemate `BLOB_READ_WRITE_TOKEN`. Za testiranje Blob upload-a lokalno, pokrenite `vercel env pull`.
 
 ## Korisne komande
 

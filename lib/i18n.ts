@@ -156,6 +156,8 @@ export const sr = {
     chooseImage: "Izaberite sliku za otpremanje.",
     imageTooLarge: "Slika mora biti 2 MB ili manja.",
     invalidImageType: "Koristite JPG, PNG, WEBP ili GIF format.",
+    imageStorageNotConfigured:
+      "Skladište slika nije podešeno. Dodajte Vercel Blob store u projekat.",
     invalidScoreFormat: "Rezultat mora biti unet kao 6:4, 3:6, 6:2 ili 2:1.",
     invalidScoreValues: "Dozvoljeni rezultati u setovima su 2:0, 2:1, 0:2 ili 1:2.",
     invalidDetailedScore: "Unesite 2 ili 3 seta, npr. 6:4, 3:6, 6:2.",
