@@ -41,7 +41,8 @@ Admin prijava: `http://localhost:3000/admin/login`
 | `DATABASE_URL` | `postgresql://...?sslmode=require` |
 | `ADMIN_PASSWORD` | jaka admin lozinka |
 | `SESSION_SECRET` | najmanje 32 random karaktera |
-| `BLOB_READ_WRITE_TOKEN` | automatski se dodaje kada povežete Vercel Blob store |
+| `BLOB_READ_WRITE_TOKEN` | dodaje se pri kreiranju Blob store-a (opciono) |
+| `BLOB_STORE_ID` | dodaje se kada povežete Blob store sa projektom |
 
 3. Build command (već podešen u `package.json`):
 
@@ -59,7 +60,7 @@ Na Vercelu filesystem je read-only, pa se slike ne mogu čuvati u `public/upload
 
 1. U Vercel dashboard-u otvorite projekat.
 2. Idite na **Storage** → **Create Database** → **Blob**.
-3. Povežite Blob store sa projektom — Vercel automatski dodaje `BLOB_READ_WRITE_TOKEN`.
+3. Povežite Blob store sa projektom (**Storage → vaš store → Connect to Project**). Vercel dodaje `BLOB_STORE_ID` i koristi OIDC autentifikaciju na deploy-u.
 
 Lokalno, slike se i dalje čuvaju u `public/uploads/players/` ako nemate `BLOB_READ_WRITE_TOKEN`. Za testiranje Blob upload-a lokalno, pokrenite `vercel env pull`.
 
