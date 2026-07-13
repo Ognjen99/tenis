@@ -101,7 +101,7 @@ describe("league rules", () => {
     ]);
   });
 
-  it("uses head-to-head when points and sets won are tied", () => {
+  it("uses head-to-head when points are tied", () => {
     const standings = calculateStandings(
       [...players, { id: "d", name: "Dejan", isActive: true }],
       [
@@ -139,7 +139,7 @@ describe("league rules", () => {
     expect(standings[1].playerName).toBe("Bojan");
   });
 
-  it("uses gems when points and sets won are tied", () => {
+  it("uses head-to-head games before overall games when points are tied", () => {
     const standings = calculateStandings(
       [
         { id: "a", name: "Ana", isActive: true },
@@ -171,5 +171,62 @@ describe("league rules", () => {
     expect(standings[0].gamesWon).toBe(23);
     expect(standings[1].playerName).toBe("Bojan");
     expect(standings[1].gamesWon).toBe(20);
+  });
+
+  it("ranks by head-to-head when tied on points even if overall games differ", () => {
+    const standings = calculateStandings(
+      [
+        { id: "aleksandar", name: "Aleksandar Pavlović", isActive: true },
+        { id: "radan", name: "Radan Savić", isActive: true },
+        { id: "other", name: "Other", isActive: true },
+      ],
+      [
+        withGames({
+          id: "h2h-1",
+          player1Id: "radan",
+          player2Id: "aleksandar",
+          player1Sets: 2,
+          player2Sets: 1,
+          player1Games: 14,
+          player2Games: 10,
+        }),
+        withGames({
+          id: "h2h-2",
+          player1Id: "aleksandar",
+          player2Id: "radan",
+          player1Sets: 2,
+          player2Sets: 1,
+          player1Games: 12,
+          player2Games: 13,
+        }),
+        withGames({
+          id: "a-other",
+          player1Id: "aleksandar",
+          player2Id: "other",
+          player1Sets: 2,
+          player2Sets: 0,
+          player1Games: 24,
+          player2Games: 8,
+        }),
+        withGames({
+          id: "r-other",
+          player1Id: "radan",
+          player2Id: "other",
+          player1Sets: 2,
+          player2Sets: 0,
+          player1Games: 12,
+          player2Games: 6,
+        }),
+      ],
+    );
+
+    const aleksandar = standings.find((row) => row.playerName === "Aleksandar Pavlović");
+    const radan = standings.find((row) => row.playerName === "Radan Savić");
+
+    expect(aleksandar?.points).toBe(7);
+    expect(radan?.points).toBe(7);
+    expect(aleksandar?.gamesWon).toBeGreaterThan(radan?.gamesWon ?? 0);
+    expect(standings[0].playerName).toBe("Radan Savić");
+    expect(standings[1].playerName).toBe("Aleksandar Pavlović");
   });
 });
